@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Море Лап — Коммерческое предложение</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ocean: #0a4f6e;
+    --deep: #062d42;
+    --wave: #1a8bb0;
+    --foam: #e8f7fc;
+    --sand: #f5ede0;
+    --coral: #e85d3a;
+    --sun: #f7c444;
+    --mint: #4ecdc4;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --muted: #5a6a7a;
+    --border: rgba(10,79,110,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    backdrop-filter: blur(20px);
+    background: rgba(255,255,255,0.85);
+    border-bottom: 1px solid var(--border);
+    transition: all 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 900;
+    color: var(--ocean);
+    letter-spacing: -0.5px;
+  }
+  .nav-logo span { color: var(--coral); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
+    text-transform: uppercase; color: var(--muted);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ocean); }
+  .nav-cta {
+    background: var(--coral); color: white;
+    border: none; padding: 10px 24px; border-radius: 40px;
+    font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .nav-cta:hover { background: var(--ocean); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--deep);
+    position: relative; overflow: hidden;
+    display: flex; align-items: center;
+    padding: 120px 48px 80px;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 50%, rgba(26,139,176,0.35) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 80% at 10% 80%, rgba(78,205,196,0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 90% 10%, rgba(232,93,58,0.15) 0%, transparent 60%);
+  }
+  /* wave animation */
+  .waves {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 180px;
+    overflow: hidden;
+  }
+  .wave {
+    position: absolute; bottom: 0;
+    width: 200%; height: 100%;
+    background: var(--white);
+    border-radius: 50% 50% 0 0 / 80px 80px 0 0;
+  }
+  .wave-1 { left: -50%; animation: waveAnim 8s linear infinite; opacity: 0.08; }
+  .wave-2 { left: -50%; animation: waveAnim 11s linear infinite reverse; opacity: 0.12; top: 20px; }
+  .wave-3 { left: -50%; animation: waveAnim 14s linear infinite; opacity: 0.2; top: 40px; }
+  .wave-4 { left: 0; bottom: -10px; background: var(--white); border-radius: 50% 50% 0 0 / 60px 60px 0 0; opacity: 1; height: 70px; animation: none; }
+  @keyframes waveAnim {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(50%); }
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(247,196,68,0.2); border: 1px solid rgba(247,196,68,0.4);
+    color: var(--sun); padding: 6px 16px; border-radius: 40px;
+    font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 8vw, 96px);
+    line-height: 0.95; font-weight: 900;
+    color: var(--white);
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+  .hero-title .accent { color: var(--sun); display: block; }
+  .hero-sub {
+    font-size: 18px; line-height: 1.6; color: rgba(255,255,255,0.7);
+    max-width: 520px; margin-bottom: 48px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+  .hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+  .btn-primary {
+    background: var(--coral); color: white;
+    border: none; padding: 16px 36px; border-radius: 50px;
+    font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: all 0.25s; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary:hover { background: var(--sun); color: var(--deep); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(232,93,58,0.4); }
+  .btn-outline {
+    background: transparent; color: white;
+    border: 2px solid rgba(255,255,255,0.3); padding: 16px 36px; border-radius: 50px;
+    font-family: 'Manrope', sans-serif; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: all 0.25s; text-decoration: none;
+  }
+  .btn-outline:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+  .hero-stats {
+    display: flex; gap: 48px; margin-top: 64px;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px; font-weight: 900; color: var(--sun);
+  }
+  .stat-label { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+  .hero-visual {
+    position: absolute; right: 48px; top: 50%; transform: translateY(-50%);
+    z-index: 2;
+    animation: fadeUp 1s ease 0.2s both;
+  }
+  .paw-circle {
+    width: 420px; height: 420px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,139,176,0.3), rgba(6,45,66,0.1));
+    border: 1px solid rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 160px;
+    animation: float 6s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 48px; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--coral); margin-bottom: 16px;
+  }
+  .section-tag::before {
+    content: ''; display: block;
+    width: 24px; height: 2px; background: var(--coral);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 900; line-height: 1.1;
+    color: var(--deep); margin-bottom: 20px;
+  }
+  .section-sub {
+    font-size: 17px; line-height: 1.7; color: var(--muted);
+    max-width: 620px;
+  }
+
+  /* ── AUTHOR ── */
+  .author-section {
+    background: var(--sand);
+    padding: 100px 48px;
+  }
+  .author-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .author-visual {
+    position: relative;
+  }
+  .author-card {
+    background: var(--ocean);
+    border-radius: 32px; padding: 56px 48px;
+    color: white; position: relative; overflow: hidden;
+  }
+  .author-card::before {
+    content: ''; position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+  }
+  .author-card::after {
+    content: ''; position: absolute;
+    bottom: -40px; left: -40px;
+    width: 150px; height: 150px; border-radius: 50%;
+    background: rgba(78,205,196,0.15);
+  }
+  .author-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px; font-weight: 900; margin-bottom: 8px;
+  }
+  .author-role { color: rgba(255,255,255,0.6); font-size: 14px; margin-bottom: 32px; }
+  .author-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    background: rgba(255,255,255,0.12);
+    padding: 6px 14px; border-radius: 20px;
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.9);
+  }
+
+  .author-text h2 { margin-bottom: 24px; }
+  .author-text p {
+    font-size: 16px; line-height: 1.8; color: var(--muted); margin-bottom: 16px;
+  }
+  .competencies { margin-top: 40px; }
+  .comp-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 16px 0; border-bottom: 1px solid var(--border);
+  }
+  .comp-icon {
+    width: 40px; height: 40px; border-radius: 12px;
+    background: var(--ocean); display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .comp-text strong { display: block; font-size: 14px; font-weight: 700; color: var(--deep); }
+  .comp-text span { font-size: 13px; color: var(--muted); }
+
+  /* ── CONTEXT ── */
+  .context-section { background: var(--white); max-width: 1200px; margin: 0 auto; }
+  .context-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 24px; margin-top: 60px;
+  }
+  .context-card {
+    padding: 40px 32px; border-radius: 24px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: default;
+  }
+  .context-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+  .context-card.blue { background: var(--ocean); color: white; }
+  .context-card.foam { background: var(--foam); }
+  .context-card.coral-bg { background: var(--coral); color: white; }
+  .context-card-icon { font-size: 40px; margin-bottom: 20px; }
+  .context-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700; margin-bottom: 12px;
+  }
+  .context-card p { font-size: 14px; line-height: 1.7; opacity: 0.85; }
+  .context-card.blue .kpi, .context-card.coral-bg .kpi {
+    display: inline-block; margin-top: 20px;
+    background: rgba(255,255,255,0.2); padding: 6px 16px; border-radius: 20px;
+    font-size: 13px; font-weight: 700;
+  }
+  .context-card.foam .kpi {
+    display: inline-block; margin-top: 20px;
+    background: var(--ocean); color: white; padding: 6px 16px; border-radius: 20px;
+    font-size: 13px; font-weight: 700;
+  }
+
+  /* ── PROBLEMS ── */
+  .problems-section { background: var(--deep); color: white; }
+  .problems-inner { max-width: 1200px; margin: 0 auto; }
+  .problems-section .section-title { color: white; }
+  .problems-section .section-sub { color: rgba(255,255,255,0.6); }
+  .problems-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 24px; margin-top: 60px;
+  }
+  .problem-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px; padding: 32px;
+    transition: background 0.3s;
+  }
+  .problem-card:hover { background: rgba(255,255,255,0.09); }
+  .problem-icon { font-size: 32px; margin-bottom: 16px; }
+  .problem-card h3 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+  .problem-card p { font-size: 14px; line-height: 1.7; color: rgba(255,255,255,0.6); }
+
+  /* ── SERVICES ── */
+  .services-section { background: var(--foam); padding: 100px 48px; }
+  .services-inner { max-width: 1200px; margin: 0 auto; }
+  .services-tabs {
+    display: flex; gap: 8px; margin: 48px 0 40px;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 10px 24px; border-radius: 40px;
+    border: 2px solid var(--border);
+    background: white; color: var(--muted);
+    font-family: 'Manrope', sans-serif; font-size: 13px; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover {
+    background: var(--ocean); border-color: var(--ocean); color: white;
+  }
+  .service-panel { display: none; }
+  .service-panel.active { display: block; }
+
+  /* Strategy packages */
+  .packages-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+  }
+  .package-card {
+    background: white; border-radius: 24px;
+    padding: 40px 32px;
+    border: 2px solid transparent;
+    transition: all 0.3s; position: relative; overflow: hidden;
+  }
+  .package-card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: var(--ocean);
+  }
+  .package-card.featured::before { background: var(--coral); }
+  .package-card:hover { border-color: var(--ocean); transform: translateY(-4px); box-shadow: 0 20px 60px rgba(10,79,110,0.12); }
+  .package-card.featured:hover { border-color: var(--coral); }
+  .package-badge {
+    display: inline-block; padding: 4px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+    background: var(--foam); color: var(--ocean); margin-bottom: 20px;
+  }
+  .package-card.featured .package-badge { background: rgba(232,93,58,0.1); color: var(--coral); }
+  .package-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px; font-weight: 700; margin-bottom: 8px;
+  }
+  .package-price {
+    font-size: 28px; font-weight: 900; color: var(--ocean); margin: 16px 0;
+  }
+  .package-card.featured .package-price { color: var(--coral); }
+  .package-duration {
+    font-size: 12px; color: var(--muted); margin-bottom: 24px;
+  }
+  .package-features { list-style: none; }
+  .package-features li {
+    padding: 10px 0; font-size: 14px; color: var(--muted);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 10px;
+    line-height: 1.5;
+  }
+  .package-features li:last-child { border-bottom: none; }
+  .check { color: var(--mint); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── PRICING TABLE ── */
+  .pricing-section { background: var(--white); padding: 100px 48px; }
+  .pricing-inner { max-width: 1100px; margin: 0 auto; }
+  .pricing-table {
+    width: 100%; border-collapse: collapse; margin-top: 60px;
+    border-radius: 24px; overflow: hidden;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.06);
+  }
+  .pricing-table th {
+    background: var(--ocean); color: white;
+    padding: 20px 24px; text-align: center;
+    font-size: 14px; font-weight: 700;
+  }
+  .pricing-table th:first-child { text-align: left; width: 40%; }
+  .pricing-table th.featured-col { background: var(--coral); }
+  .pricing-table td {
+    padding: 16px 24px; font-size: 14px;
+    border-bottom: 1px solid var(--border);
+    text-align: center;
+  }
+  .pricing-table td:first-child { text-align: left; font-weight: 500; }
+  .pricing-table tr:last-child td { border-bottom: none; }
+  .pricing-table tr:nth-child(even) td { background: var(--foam); }
+  .pricing-table .price-row td {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 900; color: var(--ocean);
+    padding: 24px; background: white;
+    border-top: 2px solid var(--ocean);
+  }
+  .pricing-table .price-row td.featured-col { color: var(--coral); border-top-color: var(--coral); }
+  .check-mark { color: var(--mint); font-size: 20px; font-weight: 700; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--muted); padding: 12px 24px !important;
+    background: var(--sand) !important;
+    text-align: left !important;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    background: linear-gradient(135deg, var(--ocean), var(--deep));
+    text-align: center; padding: 120px 48px;
+    position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '🐾';
+    position: absolute; font-size: 300px; opacity: 0.03;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+  }
+  .cta-section .section-title { color: white; margin-bottom: 16px; }
+  .cta-section .section-sub { color: rgba(255,255,255,0.7); margin: 0 auto 48px; }
+  .cta-contact {
+    display: flex; align-items: center; justify-content: center; gap: 20px;
+    flex-wrap: wrap; margin-top: 40px;
+  }
+  .contact-card {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 16px; padding: 20px 32px;
+    text-align: center; color: white;
+  }
+  .contact-card .label { font-size: 11px; opacity: 0.6; text-transform: uppercase; letter-spacing: 1px; }
+  .contact-card .value { font-size: 22px; font-weight: 700; margin-top: 4px; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--deep); padding: 32px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px; font-weight: 900; color: white;
+  }
+  .footer-logo span { color: var(--coral); }
+  footer p { font-size: 13px; color: rgba(255,255,255,0.4); }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section, .author-section, .services-section, .pricing-section, .cta-section { padding: 60px 24px; }
+    .hero { padding: 120px 24px 80px; }
+    .hero-visual { display: none; }
+    .author-grid { grid-template-columns: 1fr; gap: 40px; }
+    .context-grid { grid-template-columns: 1fr; }
+    .problems-grid { grid-template-columns: 1fr; }
+    .packages-grid { grid-template-columns: 1fr; }
+    .pricing-table { font-size: 12px; }
+    .pricing-table th, .pricing-table td { padding: 12px; }
+    footer { flex-direction: column; gap: 16px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Море<span>Лап</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#context">Проект</a></li>
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#pricing">Стоимость</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Обсудить проект</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="waves">
+    <div class="wave wave-1"></div>
+    <div class="wave wave-2"></div>
+    <div class="wave wave-3"></div>
+    <div class="wave wave-4"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">🐾 Коммерческое предложение · ЧВС / «Айболит»</div>
+    <h1 class="hero-title">
+      Море
+      <span class="accent">Лап</span>
+    </h1>
+    <p class="hero-sub">Делаем из фестиваля работающий бизнес-инструмент. Стратегия, визуальная система и ИИ-автоматизация — чтобы партнёры платили, гости возвращались, а команда не собирала всё заново каждый год.</p>
+    <div class="hero-actions">
+      <a href="#services" class="btn-primary">Смотреть предложение ↓</a>
+      <a href="#pricing" class="btn-outline">Стоимость</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">5000+</div>
+        <div class="stat-label">целевая аудитория 2026</div>
+      </div>
+      <div>
+        <div class="stat-num">ноябрь</div>
+        <div class="stat-label">готовность партнёрской программы</div>
+      </div>
+      <div>
+        <div class="stat-num">×3</div>
+        <div class="stat-label">направления в одном решении</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="paw-circle">🐾</div>
+  </div>
+</section>
+
+<!-- ABOUT AUTHOR -->
+<section class="author-section" id="about">
+  <div style="max-width:1200px;margin:0 auto;">
+
+    <!-- Intro -->
+    <div class="reveal" style="text-align:center;margin-bottom:64px;">
+      <div class="section-tag" style="justify-content:center;">О нас</div>
+      <h2 class="section-title">Мы не просто делаем красиво</h2>
+      <p class="section-sub" style="margin:0 auto;">Мы берём бизнес-задачу и строим под неё систему: исследуем, позиционируем, проектируем и запускаем. Стратегия, дизайн и ИИ-архитектура — в одних руках, без потерь на стыках. Под каждый проект собираем команду и ведём его до результата. </p>
+    </div>
+
+    <!-- Two people -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-bottom:64px;" class="team-grid">
+
+      <!-- Dasha -->
+      <div class="author-card reveal">
+        <div class="author-name">Дарья Козлова</div>
+        <div class="author-role">Стратегический дизайнер</div>
+        <div class="author-tags" style="margin-bottom:28px;">
+          <span class="tag">Бренд-стратегия</span>
+          <span class="tag">Визуальные системы</span>
+          <span class="tag">UX/UI</span>
+          <span class="tag">Digital</span>
+        </div>
+        <div class="comp-item" style="border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;">
+          <div class="comp-icon" style="background:rgba(255,255,255,0.12);">🎯</div>
+          <div class="comp-text">
+            <strong style="color:white;">Стратегия и бренд-платформа</strong>
+            <span style="color:rgba(255,255,255,0.6);">Исследование рынка и аудитории, позиционирование, платформа бренда</span>
+          </div>
+        </div>
+        <div class="comp-item" style="border-top:1px solid rgba(255,255,255,0.1);">
+          <div class="comp-icon" style="background:rgba(255,255,255,0.12);">🎨</div>
+          <div class="comp-text">
+            <strong style="color:white;">Визуальная система и коммуникации</strong>
+            <span style="color:rgba(255,255,255,0.6);">Айдентика, дизайн-система, носители — которую можно передать команде</span>
+          </div>
+        </div>
+        <div class="comp-item" style="border-top:1px solid rgba(255,255,255,0.1);border-bottom:none;">
+          <div class="comp-icon" style="background:rgba(255,255,255,0.12);">💻</div>
+          <div class="comp-text">
+            <strong style="color:white;">Digital-носители и web</strong>
+            <span style="color:rgba(255,255,255,0.6);">UX/UI, прототипирование, сайт, который продаёт фестиваль</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Giorgi -->
+      <div class="author-card reveal" style="background:linear-gradient(135deg,#062d42,#0a3d56);border:1px solid rgba(78,205,196,0.2);">
+        <div class="author-name">Георгий Андреев</div>
+        <div class="author-role">Архитектор ИИ-решений</div>
+        <div class="author-tags" style="margin-bottom:28px;">
+          <span class="tag">ИИ-автоматизация</span>
+          <span class="tag">Боты и агенты</span>
+          <span class="tag">n8n</span>
+          <span class="tag">MVP</span>
+        </div>
+        <div class="comp-item" style="border-top:1px solid rgba(255,255,255,0.1);padding-top:16px;">
+          <div class="comp-icon" style="background:rgba(78,205,196,0.2);">🤖</div>
+          <div class="comp-text">
+            <strong style="color:white;">ИИ-автоматизация и боты</strong>
+            <span style="color:rgba(255,255,255,0.6);">Telegram-боты, ИИ-ассистенты, агенты — от концепции до запуска</span>
+          </div>
+        </div>
+        <div class="comp-item" style="border-top:1px solid rgba(255,255,255,0.1);">
+          <div class="comp-icon" style="background:rgba(78,205,196,0.2);">⚙️</div>
+          <div class="comp-text">
+            <strong style="color:white;">Технические интеграции и архитектура</strong>
+            <span style="color:rgba(255,255,255,0.6);">Связываем CRM, мессенджеры, базы данных и сервисы в одну систему</span>
+          </div>
+        </div>
+        <div class="comp-item" style="border-top:1px solid rgba(255,255,255,0.1);border-bottom:none;">
+          <div class="comp-icon" style="background:rgba(78,205,196,0.2);">🚀</div>
+          <div class="comp-text">
+            <strong style="color:white;">Быстрый запуск MVP</strong>
+            <span style="color:rgba(255,255,255,0.6);">От идеи до работающего продукта — без лишних итераций и потерянных недель</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+@media (max-width: 900px) {
+  .team-grid { grid-template-columns: 1fr !important; }
+}
+</style>
+
+<!-- PROJECT CONTEXT -->
+<section id="context" style="padding: 100px 48px; background: white;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div class="reveal">
+      <div class="section-tag">О проекте</div>
+      <h2 class="section-title">Что происходит с фестивалем сейчас</h2>
+      <p class="section-sub">«Море Лап» — это B2C-точка всей экосистемы ЧВС / «Айболит». Фестиваль бесплатный для гостей, а значит его экономика держится на партнёрах. И именно здесь сейчас теряются деньги.</p>
+    </div>
+    <div class="context-grid">
+      <div class="context-card blue reveal">
+        <div class="context-card-icon">🏖️</div>
+        <h3>Витрина для живой аудитории</h3>
+        <p>Конференция и бизнес-форум работают с B2B. «Море Лап» — единственное событие экосистемы, где вы разговариваете с конечным клиентом напрямую. Это ценно. И пока не используется.</p>
+        <span class="kpi">Бесплатно для посетителей</span>
+      </div>
+      <div class="context-card foam reveal">
+        <div class="context-card-icon">📈</div>
+        <h3>Три задачи одновременно</h3>
+        <p>Гости должны понимать, что происходит и куда идти. Партнёры — видеть проект, в который хочется вкладываться. Площадка — выглядеть как событие, а не как стихийный рынок.</p>
+        <span class="kpi">KPI: 5000 человек</span>
+      </div>
+      <div class="context-card coral-bg reveal">
+        <div class="context-card-icon">🤝</div>
+        <h3>Партнёры за пределами зоо</h3>
+        <p>Банки, тревел, lifestyle-бренды — они не придут на фестиваль с белыми палатками и самодельными баннерами. Сильная упаковка открывает другой класс спонсоров.</p>
+        <span class="kpi">Готово к ноябрю 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section class="problems-section" id="problems">
+  <div class="problems-inner">
+    <div class="reveal">
+      <div class="section-tag" style="color: var(--sun);">
+        <span style="background: var(--sun);"></span>
+        Где теряются деньги
+      </div>
+      <h2 class="section-title">Четыре дыры, которые мы закрываем</h2>
+      <p class="section-sub">Мы прошли через материалы фестиваля и видим конкретные точки потерь. Каждая из них стоит денег — либо в переговорах с партнёрами, либо в восприятии гостей, либо в подготовке к следующему сезону.</p>
+    </div>
+    <div class="problems-grid">
+      <div class="problem-card reveal">
+        <div class="problem-icon">🌐</div>
+        <h3>Сайт не продаёт фестиваль</h3>
+        <p>Партнёр заходит на сайт и не понимает, зачем ему здесь быть. Гость — что вообще происходит. Это первый контакт с брендом, и он сейчас работает против фестиваля.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="problem-icon">⛺</div>
+        <h3>Площадка выглядит как временная</h3>
+        <p>Белые палатки, навигация на коленке, непоследовательное оформление. Гость чувствует это физически — и это напрямую влияет на то, придёт ли он снова и расскажет ли друзьям.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="problem-icon">🚫</div>
+        <h3>Партнёры уже разочаровывались</h3>
+        <p>Спонсорские зоны делались без тестирования — что-то не работало, кто-то остался недоволен. С каждым таким случаем следующий переговорный раунд становится сложнее.</p>
+      </div>
+      <div class="problem-card reveal">
+        <div class="problem-icon">🔄</div>
+        <h3>Каждый год — с чистого листа</h3>
+        <p>Дизайнеры меняются, материалы теряются, логика не сохраняется. Команда тратит месяцы на то, что можно было сделать за недели, если бы система была выстроена один раз.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section" id="services">
+  <div class="services-inner">
+    <div class="reveal">
+      <div class="section-tag">Наши услуги</div>
+      <h2 class="section-title">Что именно мы делаем</h2>
+      <p class="section-sub">Три направления, которые работают вместе. Можно взять каждое отдельно — но сила в том, что они собраны в одну систему и ведутся одной командой.</p>
+    </div>
+    <div class="services-tabs">
+      <button class="tab-btn active" onclick="showTab('strategy', this)">🎯 Стратегия</button>
+      <button class="tab-btn" onclick="showTab('visual', this)">🎨 Визуальная система</button>
+      <button class="tab-btn" onclick="showTab('ai', this)">🤖 ИИ-автоматизация</button>
+    </div>
+
+    <!-- STRATEGY -->
+    <div class="service-panel active" id="panel-strategy">
+      <div class="packages-grid">
+        <div class="package-card reveal">
+          <div class="package-badge">Быстрый старт</div>
+          <h3>Экспресс-стратегия</h3>
+          <div class="package-price">от 90 000 ₽</div>
+          <div class="package-duration">⏱ 2 недели · минимум, который уже работает</div>
+          <ul class="package-features">
+            <li><span class="check">✓</span>Глубинные интервью с командой — чтобы понять, как вы сами видите фестиваль</li>
+            <li><span class="check">✓</span>Быстрый анализ конкурентов и аудитории</li>
+            <li><span class="check">✓</span>Гипотеза позиционирования — внятная, не на 40 страниц</li>
+            <li><span class="check">✓</span>Конкретные рекомендации, что делать прямо сейчас</li>
+            <li><span class="check">✓</span>Презентация с результатами</li>
+          </ul>
+        </div>
+        <div class="package-card featured reveal">
+          <div class="package-badge">Полная стратегия</div>
+          <h3>Бренд-платформа</h3>
+          <div class="package-price">от 240 000 ₽</div>
+          <div class="package-duration">⏱ от 6 недель · включает экспресс-стратегию</div>
+          <ul class="package-features">
+            <li><span class="check">✓</span>Интервью с командой, партнёрами и аудиторией фестиваля</li>
+            <li><span class="check">✓</span>Полный аудит бренда + карта конкурентного поля</li>
+            <li><span class="check">✓</span>Выявление настоящих потребностей — не то, что аудитория говорит, а то, что движет</li>
+            <li><span class="check">✓</span>Готовая платформа бренда: миссия, ценности, архетип, TOV</li>
+            <li><span class="check">✓</span>Руководство по применению — чтобы команда могла работать без нас</li>
+            <li><span class="check">✓</span>Исключительные права на все материалы</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- VISUAL -->
+    <div class="service-panel" id="panel-visual">
+      <div class="packages-grid">
+        <div class="package-card reveal">
+          <div class="package-badge">Пакет 1</div>
+          <h3>Базовая визуальная система</h3>
+          <div class="package-price">от 230 000 ₽</div>
+          <div class="package-duration">Фестиваль выглядит цельно — онлайн и офлайн</div>
+          <ul class="package-features">
+            <li><span class="check">✓</span>Figma-макеты главной и страницы регистрации для маркетингового агентства</li>
+            <li><span class="check">✓</span>Ключевые коммуникационные носители</li>
+            <li><span class="check">✓</span>Мерч до 6 позиций</li>
+            <li><span class="check">✓</span>Афиши, лифлеты, карта фестиваля, бейджи</li>
+            <li><span class="check">✓</span>Шаблоны для соцсетей по 4–6 рубрикам</li>
+            <li><span class="check">✓</span>Базовый гайдлайн в Figma: логотип, цвет, типографика</li>
+          </ul>
+        </div>
+        <div class="package-card reveal">
+          <div class="package-badge">Пакет 2</div>
+          <h3>Среда и навигация</h3>
+          <div class="package-price">от 320 000 ₽</div>
+          <div class="package-duration">Пакет 1 + никакого хаоса на площадке</div>
+          <ul class="package-features">
+            <li><span class="check">✓</span>Концепция визуальной среды фестиваля</li>
+            <li><span class="check">✓</span>Баннеры, брендволл, сцена, партнёрские зоны и корнеры</li>
+            <li><span class="check">✓</span>Логика навигации: маршруты, потоки, точки решений</li>
+            <li><span class="check">✓</span>Стелы, указатели, пиктограммы</li>
+            <li><span class="check">✓</span>Зональная навигация по всей площадке</li>
+          </ul>
+        </div>
+        <div class="package-card featured reveal">
+          <div class="package-badge">Пакет 3</div>
+          <h3>Масштабируемая бренд-система</h3>
+          <div class="package-price">от 440 000 ₽</div>
+          <div class="package-duration">Пакеты 1 + 2 + система на годы вперёд</div>
+          <ul class="package-features">
+            <li><span class="check">✓</span>Дизайн-система под линейку мероприятий — с вариативностью по темам и городам</li>
+            <li><span class="check">✓</span>Концепция масштабирования: схемы, допустимые трансформации</li>
+            <li><span class="check">✓</span>Библиотека презентаций по типам партнёров</li>
+            <li><span class="check">✓</span>Маскоты и библиотека иллюстраций</li>
+            <li><span class="check">✓</span>Стикерпаки и digital-фичи для каналов</li>
+            <li><span class="check">✓</span>Полный брендбук с промптами для генерации визуала</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI -->
+    <div class="service-panel" id="panel-ai">
+      <div class="packages-grid">
+        <div class="package-card reveal">
+          <div class="package-badge">Пакет 1</div>
+          <h3>ИИ-менеджер</h3>
+          <div class="package-price">от 90 000 ₽</div>
+          <div class="package-duration">Запускаем к фестивалю 2026</div>
+          <ul class="package-features">
+            <li><span class="check">✓</span>ИИ-ассистент на сайте — отвечает вместо менеджера 24/7</li>
+            <li><span class="check">✓</span>Бот в мессенджере для гостей</li>
+            <li><span class="check">✓</span>Ответы по программе, расписанию, навигации</li>
+            <li><span class="check">✓</span>Обработка регистраций</li>
+            <li><span class="check">✓</span>Аналитика: что спрашивают, что непонятно</li>
+          </ul>
+        </div>
+        <div class="package-card reveal">
+          <div class="package-badge">Пакет 2</div>
+          <h3>ИИ-контент и digital-контур</h3>
+          <div class="package-price">от 250 000 ₽</div>
+          <div class="package-duration">Пакет 1 + контент без перегрева команды</div>
+          <ul class="package-features">
+            <li><span class="check">✓</span>Автоматизация создания контента — посты, сторис, анонсы</li>
+            <li><span class="check">✓</span>«Дизайн-завод»: агенты для ежедневного фото и видео контента</li>
+            <li><span class="check">✓</span>Сайт Lite на Tilda или Pro на собственном коде — на выбор</li>
+          </ul>
+        </div>
+        <div class="package-card featured reveal">
+          <div class="package-badge">Пакет 3</div>
+          <h3>ИИ-операционная система</h3>
+          <div class="package-price">от 350 000 ₽</div>
+          <div class="package-duration">Пакеты 1 + 2 + порядок внутри</div>
+          <ul class="package-features">
+            <li><span class="check">✓</span>Интеграции с CRM, формами, таблицами и отчётами</li>
+            <li><span class="check">✓</span>База знаний фестиваля: FAQ, схема, правила, инструкции для волонтёров</li>
+            <li><span class="check">✓</span>Внутренний бот для команды, партнёров и волонтёров</li>
+            <li><span class="check">✓</span>Автоматические уведомления, статусы, аналитика обращений</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING TABLE -->
+<section class="pricing-section" id="pricing">
+  <div class="pricing-inner">
+    <div class="reveal">
+      <div class="section-tag">Стоимость</div>
+      <h2 class="section-title">Три точки входа</h2>
+      <p class="section-sub">Минимум — чтобы запустить фестиваль достойно. Средний — чтобы выйти с системой, которая работает без вас. Полный — чтобы приходить к партнёрам с другим разговором уже осенью.</p>
+    </div>
+    <div style="overflow-x: auto;">
+      <table class="pricing-table reveal">
+        <thead>
+          <tr>
+            <th>Услуга</th>
+            <th>Минимум<br><small style="font-weight:400;opacity:0.7">запуск 06.2026</small></th>
+            <th class="featured-col">Средний<br><small style="font-weight:400;opacity:0.7">с дизайн-системой</small></th>
+            <th>Полный<br><small style="font-weight:400;opacity:0.7">готов к партнёрам</small></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="section-label" colspan="4">Стратегия</td></tr>
+          <tr>
+            <td>Экспресс-стратегия <span style="color:var(--muted);font-size:12px">90 000 ₽</span></td>
+            <td><span class="check-mark">✓</span></td>
+            <td class="featured-col"><span class="check-mark">✓</span></td>
+            <td><span class="check-mark">✓</span></td>
+          </tr>
+          <tr>
+            <td>Бренд-платформа <span style="color:var(--muted);font-size:12px">240 000 ₽</span></td>
+            <td>—</td>
+            <td class="featured-col">—</td>
+            <td><span class="check-mark">✓</span></td>
+          </tr>
+          <tr><td class="section-label" colspan="4">Визуальная система</td></tr>
+          <tr>
+            <td>Базовая визуальная система <span style="color:var(--muted);font-size:12px">230 000 ₽</span></td>
+            <td><span class="check-mark">✓</span></td>
+            <td class="featured-col"><span class="check-mark">✓</span></td>
+            <td><span class="check-mark">✓</span></td>
+          </tr>
+          <tr>
+            <td>Среда и навигация <span style="color:var(--muted);font-size:12px">320 000 ₽</span></td>
+            <td>—</td>
+            <td class="featured-col"><span class="check-mark">✓</span></td>
+            <td><span class="check-mark">✓</span></td>
+          </tr>
+          <tr>
+            <td>Масштабируемая бренд-система <span style="color:var(--muted);font-size:12px">440 000 ₽</span></td>
+            <td>—</td>
+            <td class="featured-col">—</td>
+            <td><span class="check-mark">✓</span></td>
+          </tr>
+          <tr><td class="section-label" colspan="4">ИИ-автоматизация</td></tr>
+          <tr>
+            <td>ИИ-менеджер <span style="color:var(--muted);font-size:12px">90 000 ₽</span></td>
+            <td><span class="check-mark">✓</span></td>
+            <td class="featured-col"><span class="check-mark">✓</span></td>
+            <td><span class="check-mark">✓</span></td>
+          </tr>
+          <tr>
+            <td>ИИ-контент и digital-контур <span style="color:var(--muted);font-size:12px">250 000 ₽</span></td>
+            <td>—</td>
+            <td class="featured-col"><span class="check-mark">✓</span></td>
+            <td><span class="check-mark">✓</span></td>
+          </tr>
+          <tr>
+            <td>ИИ-операционная система <span style="color:var(--muted);font-size:12px">350 000 ₽</span></td>
+            <td>—</td>
+            <td class="featured-col">—</td>
+            <td><span class="check-mark">✓</span></td>
+          </tr>
+          <tr class="price-row">
+            <td style="font-family:'Manrope',sans-serif;font-size:14px;font-weight:700;">Итого</td>
+            <td>от 410 000 ₽</td>
+            <td class="featured-col">от 660 000 ₽</td>
+            <td>от 1 030 000 ₽</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <div style="position:relative;z-index:2;">
+    <div class="section-tag" style="color:var(--sun);justify-content:center;margin-bottom:16px;">
+      <span style="background:var(--sun);"></span>
+      Готовы начать
+    </div>
+    <h2 class="section-title">Обсудим ваш проект?</h2>
+    <p class="section-sub">Свяжитесь с нами — расскажем подробнее о каждом пакете и подберём оптимальное решение под ваши задачи и бюджет.</p>
+    <div class="cta-contact">
+      <div class="contact-card">
+        <div class="label">Телефон</div>
+        <div class="value">8 967 197 69 88</div>
+      </div>
+      <div class="contact-card">
+        <div class="label">Контакт</div>
+        <div class="value">Дарья Козлова</div>
+      </div>
+    </div>
+    <div style="margin-top:40px;">
+      <a href="tel:89671976988" class="btn-primary" style="font-size:16px;padding:18px 48px;">
+        Позвонить сейчас →
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Море<span>Лап</span></div>
+  <p>Коммерческое предложение · Черноморское ветеринарное сообщество / «Айболит»</p>
+  <p style="color:rgba(255,255,255,0.3);font-size:12px;">© 2026 Дарья Козлова</p>
+</footer>
+
+<script>
+  // Tabs
+  function showTab(id, btn) {
+    document.querySelectorAll('.service-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav shrink
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    if (window.scrollY > 60) {
+      nav.style.padding = '12px 48px';
+      nav.style.boxShadow = '0 4px 20px rgba(0,0,0,0.08)';
+    } else {
+      nav.style.padding = '18px 48px';
+      nav.style.boxShadow = 'none';
+    }
+  });
+
+  // Stagger reveal cards
+  document.querySelectorAll('.context-grid .reveal, .problems-grid .reveal, .packages-grid .reveal').forEach((el, i) => {
+    el.style.transitionDelay = (i * 0.1) + 's';
+  });
+</script>
+</body>
+</html>
